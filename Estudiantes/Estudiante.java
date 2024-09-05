@@ -26,8 +26,22 @@ class Estudiante {
         return calificaciones;
     }
 
+    public class CalificacionInvalidaException extends Exception {
+        public CalificacionInvalidaException(String mensaje) {
+            super(mensaje);
+        }
+    }
+
     public void agregarCalificacion(int calificacion) {
-        this.calificaciones.add(calificacion);
+        try {
+            if (calificacion > 100) {
+                throw new CalificacionInvalidaException("La calificacion no puede ser superior a 100");
+            }
+            this.calificaciones.add(calificacion);
+        } catch (CalificacionInvalidaException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
     }
 
     public double calcularPromedio() {
@@ -76,4 +90,5 @@ class SistemaGestionEstudiantes {
             System.out.println("Estudiante con ID " + id + " no encontrado.");
         }
     }
+
 }
